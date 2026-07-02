@@ -13,7 +13,10 @@ resource "azurerm_storage_account" "storage-account" {
   min_tls_version           = each.value.storage_account_config.min_tls_version
   https_traffic_only_enabled       = each.value.storage_account_config.https_traffic_only
   allow_nested_items_to_be_public = each.value.storage_account_config.allow_nested_items_public
-  shared_access_key_enabled       = each.value.storage_account_config.shared_access_key_enabled
+  # Terraform(azurerm provider)이 계정 키로 데이터 플레인에 접근하므로 반드시 true 유지
+  # false로 변경 시 배포 중 403 (KeyBasedAuthenticationNotPermitted) 발생
+  # false가 필요하면 provider에 storage_use_azuread = true + 데이터 플레인 RBAC 부여 선행 필요
+  shared_access_key_enabled       = true
   tags = each.value.storage_account_config.tags
 }
 
