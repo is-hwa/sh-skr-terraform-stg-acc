@@ -3,7 +3,6 @@ variable "storage_accounts" {
     resource_group_name = string
     vnet_name            = optional(string, "")
     subnet_name          = optional(string, "")
-
     storage_account_config = object({
       name             = string
       tier             = optional(string)
@@ -13,9 +12,7 @@ variable "storage_accounts" {
       tags             = optional(map(string))
       https_traffic_only        = optional(bool)
       allow_nested_items_public = optional(bool)
-      shared_access_key_enabled = optional(bool)
     })
-
     private_endpoint_config = optional(object({
       name                 = string
       subresource_names    = optional(list(string))
